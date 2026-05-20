@@ -97,8 +97,8 @@ Use separate terminals for the backend and frontend to keep both servers running
 
 ## Directory Structure
 
-- `backend/` â€” Express server, MongoDB models, API routes
-- `frontend/` â€” React/Vite client application
+- `backend/` — Express server, MongoDB models, API routes
+- `frontend/` — React/Vite client application
 
 ---
 
