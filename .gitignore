@@ -1,0 +1,19 @@
+# Node modules
+backend/node_modules/
+frontend/node_modules/
+Social_Media_App/backend/node_modules/
+Social_Media_App/frontend/node_modules/
+
+# Environment files
+backend/.env
+frontend/.env
+Social_Media_App/backend/.env
+Social_Media_App/frontend/.env
+
+# Build outputs
+frontend/dist/
+Social_Media_App/frontend/dist/
+
+# OS files
+.DS_Store
+Thumbs.db
