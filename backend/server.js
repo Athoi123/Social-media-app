@@ -58,17 +58,27 @@ app.post('/api/register', async (req, res) => {
     await user.save();
     res.json({ message: "User registered" });
   } catch (err) {
-    res.status(400).json({ error: "Username might be taken" });
+    console.error("Registration error details:", err);
+    if (err.code === 11000) {
+      res.status(400).json({ error: "Username is already taken" });
+    } else {
+      res.status(500).json({ error: `Registration failed: ${err.message || err}` });
+    }
   }
 });
 
 app.post('/api/login', async (req, res) => {
-  const user = await User.findOne({ username: req.body.username });
-  if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
-    return res.status(400).json({ error: "Invalid credentials" });
+  try {
+    const user = await User.findOne({ username: req.body.username });
+    if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
+      return res.status(400).json({ error: "Invalid credentials" });
+    }
+    const token = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET);
+    res.json({ token, username: user.username });
+  } catch (err) {
+    console.error("Login error details:", err);
+    res.status(500).json({ error: `Login failed: ${err.message || err}` });
   }
-  const token = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET);
-  res.json({ token, username: user.username });
 });
 
 
